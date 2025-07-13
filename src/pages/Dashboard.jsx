@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 
 import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
@@ -6,19 +5,6 @@ import { Sparkles } from "lucide-react";
 import useAuthStore from '../store/useAuthStore';
 import axios from "axios"
 const COLORS = ["#4b74ed", "#66c1ba", "#fbbf24", "#f87171", "#a78bfa", "#34d399"];
-
-
-
-// const lineData = [
-//   { month: "Jan", expenses: 2000 },
-//   { month: "Feb", expenses: 1800 },
-//   { month: "Mar", expenses: 2200 },
-//   { month: "Apr", expenses: 2600 },
-//   { month: "May", expenses: 2400 },
-//   { month: "Jun", expenses: 3000 },
-// ];
-
-
 
 const Dashboard = () => {
 
@@ -42,9 +28,9 @@ const Dashboard = () => {
         setCategoryStats(categoryRes.data.data);
         // console.log("Category : ",categoryRes.data.data);
         // console.log("Recents expenses  : ", recentRes.data.data.slice(0, 5).reverse());
-        console.log(" month res : ",monthlyRes.data.data);
+        // console.log(" month res : ",monthlyRes.data.data);
         setMonthlyStats(monthlyRes.data.data);
-        setRecentExpenses(recentRes.data.data.slice(0, 5).reverse());
+        setRecentExpenses(recentRes.data.data.reverse().slice(0, 5));
       } catch (error) {
         console.error("Error loading dashboard data:", error);
       } finally {

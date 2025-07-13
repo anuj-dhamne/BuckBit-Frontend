@@ -1,8 +1,8 @@
 // src/pages/Expenses.jsx
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import{toast} from "react-hot-toast"
+import { toast } from "react-hot-toast"
 import axios from "axios"
 
 // const dummyExpenses = [
@@ -26,6 +26,7 @@ import axios from "axios"
 // ];
 
 const Expenses = () => {
+  const [loading, setLoading] = useState(false);
   const [expenses, setExpenses] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +40,7 @@ const Expenses = () => {
     category: "",
   });
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchExpenses = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/expenses/all-expenses`, { withCredentials: true });
@@ -47,9 +48,9 @@ const Expenses = () => {
         setExpenses(res.data.data);
       } catch (err) {
         console.error("Failed to fetch expenses", err);
-        if(err.status===400){
+        if (err.status === 400) {
           toast.error("No Expense !");
-        }else{
+        } else {
           toast.error("Failed to load expenses");
         }
       }
@@ -57,7 +58,7 @@ const Expenses = () => {
 
     fetchExpenses();
   }, []);
-  
+
   const openAddPopup = () => {
     setFormData({ title: "", date: "", amount: "", description: "", bill_photo: null, category: "" });
     setIsAdding(true);
@@ -70,6 +71,7 @@ const Expenses = () => {
   };
 
   const handleDelete = async (id) => {
+
     try {
       await axios.delete(`${import.meta.env.VITE_SERVER}/users/expenses/delete-expense/${id}`, { withCredentials: true });
       setExpenses((prev) => prev.filter((exp) => exp._id !== id));
@@ -81,9 +83,9 @@ const Expenses = () => {
     }
   };
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const form = new FormData();
       form.append("title", formData.title);
@@ -106,7 +108,7 @@ const handleSubmit = async (e) => {
         toast.success("Expense added");
       } else {
         const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/expenses/update-expense/${selectedExpense._id}`, {
-          title:formData.title,amount:formData.amount,date:formData.date,description:formData.description,
+          title: formData.title, amount: formData.amount, date: formData.date, description: formData.description,
         }, {
           // headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
@@ -123,6 +125,8 @@ const handleSubmit = async (e) => {
     } catch (err) {
       console.error("Submit failed", err);
       toast.error("Failed to save expense");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -138,7 +142,7 @@ const handleSubmit = async (e) => {
             className="bg-white p-4 rounded-lg shadow cursor-pointer hover:shadow-md transition flex justify-between items-center"
             onClick={() => setSelectedExpense(expense)}
           >
-            <span className="text-sm text-gray-500 w-1/4">{expense.date.slice(0,10)}</span>
+            <span className="text-sm text-gray-500 w-1/4">{expense.date.slice(0, 10)}</span>
             <span className="font-semibold w-1/4 text-[#4b74ed]">{expense.title}</span>
             <span className="text-sm text-gray-600 w-1/4">{expense.category || "N/A"}</span>
             <span className="font-medium w-1/4 text-right">₹{expense.amount}</span>
@@ -220,14 +224,7 @@ const handleSubmit = async (e) => {
               className="w-full p-2 border rounded"
               required
             />
-            {/* <input
-              type="text"
-              placeholder="Category"
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full p-2 border rounded"
-              required
-            /> */}
+
             <input
               type="date"
               value={formData.date}
@@ -264,9 +261,10 @@ const handleSubmit = async (e) => {
             />
             <button
               type="submit"
-              className="bg-[#66c1ba] text-white w-full py-2 rounded hover:bg-[#58a69f] transition"
+              className={`w-full py-2 rounded transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#66c1ba] hover:bg-[#58a69f]"
+                } text-white`}
             >
-              Submit
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </form>
         </>
