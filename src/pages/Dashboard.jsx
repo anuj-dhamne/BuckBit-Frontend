@@ -7,7 +7,7 @@ import axios from "axios"
 const COLORS = ["#4b74ed", "#66c1ba", "#fbbf24", "#f87171", "#a78bfa", "#34d399"];
 
 const Dashboard = () => {
-
+  const fetchUserOnLoad = useAuthStore((state) => state.fetchUserOnLoad);
   const [loading, setLoading] = useState(true);
   const [categoryStats, setCategoryStats] = useState([]);
   const [monthlyStats, setMonthlyStats] = useState([]);
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [aiSummary, setAiSummary] = useState("");
 
   useEffect(() => {
+    fetchUserOnLoad(); // Ensure user data is fetched on component mount
     const fetchDashboardData = async () => {
       try {
 

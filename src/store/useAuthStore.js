@@ -5,13 +5,10 @@ const useAuthStore = create((set) => ({
   user: null,
   isLoggedIn: false,
   authLoading: true,
-
   // Set user on login
   login: (userData) => set({ user: userData, isLoggedIn: true ,authLoading:false}),
-
   // Clear user on logout
   logout: () => set({ user: null, isLoggedIn: false,authLoading:false }),
-
 
     fetchUserOnLoad: async () => {
     try {
