@@ -107,9 +107,13 @@ const Expenses = () => {
         setExpenses((prev) => [...prev, res.data.data]);
         toast.success("Expense added");
       } else {
-        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/expenses/update-expense/${selectedExpense._id}`, {
+        console.log("I am in Edit expenses ! ");
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/expenses/update-expense/${selectedExpense._id}`, 
+        {
           title: formData.title, amount: formData.amount, date: formData.date, description: formData.description,
-        }, {
+        }, 
+        // form,
+        {
           // headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
         });
