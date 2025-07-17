@@ -5,25 +5,6 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast"
 import axios from "axios"
 
-// const dummyExpenses = [
-//   {
-//     id: 1,
-//     title: "Groceries",
-//     category: "Food",
-//     date: "2025-06-20",
-//     amount: 2500,
-//     description: "Bought vegetables and fruits",
-//     bill_photo: "https://via.placeholder.com/150",
-//   },
-//   {
-//     id: 2,
-//     title: "Electricity Bill",
-//     category: "Utilities",
-//     date: "2025-06-18",
-//     amount: 1200,
-//     bill_photo: null,
-//   },
-// ];
 
 const Expenses = () => {
   const [loading, setLoading] = useState(false);
@@ -44,7 +25,7 @@ const Expenses = () => {
     const fetchExpenses = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/expenses/all-expenses`, { withCredentials: true });
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setExpenses(res.data.data);
       } catch (err) {
         console.error("Failed to fetch expenses", err);
@@ -107,7 +88,6 @@ const Expenses = () => {
         setExpenses((prev) => [...prev, res.data.data]);
         toast.success("Expense added");
       } else {
-        console.log("I am in Edit expenses ! ");
         const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/expenses/update-expense/${selectedExpense._id}`, 
         {
           title: formData.title, amount: formData.amount, date: formData.date, description: formData.description,

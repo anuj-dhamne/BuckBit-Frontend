@@ -15,7 +15,7 @@ const useAuthStore = create((set) => ({
       const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/current-user`, {
         withCredentials: true,
       });
-      console.log("Current User (useContest) : ",res);
+      // console.log("Current User (useContest) : ",res);
       set({ isLoggedIn: true, user: res.data.data ,authLoading:false });
     } catch (err) {
       set({ isLoggedIn: false, user: null ,authLoading:false}); // clear state if token is invalid

@@ -62,7 +62,7 @@ const Dashboard = () => {
       const insightRes = await axios.get(`${import.meta.env.VITE_SERVER}/users/expenses/monthly-summary`, {
         withCredentials: true,
       });
-      console.log("insights res : ", insightRes.data.summary);
+      // console.log("insights res : ", insightRes.data.summary);
       setAiSummary(insightRes.data.summary);
     } catch (error) {
       console.log("error :", error);

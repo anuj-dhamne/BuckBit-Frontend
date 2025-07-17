@@ -62,16 +62,6 @@ const handleAvatarChange = async (e) => {
     e.preventDefault();
 
     try {
-      // const formData = new FormData();
-      // formData.append("name", user.name);
-      // formData.append("email", user.email);
-      // formData.append("budgetAmount", user.budgetAmount);
-      // formData.append("budgetSurpassAlert", user.budgetSurpassAlert);
-      // formData.append("isMailAllow", user.isMailAllow);
-
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}:`, value);
-        // }
 
       const res = await axios.patch(
         `${import.meta.env.VITE_SERVER}/users/update-details`,
@@ -86,7 +76,7 @@ const handleAvatarChange = async (e) => {
           withCredentials: true,
         }
       );
-      console.log("Res in Profile : ",res);
+      // console.log("Res in Profile : ",res);
       toast.success("Profile updated successfully!");
 
       // Optional: Update Zustand store with new data

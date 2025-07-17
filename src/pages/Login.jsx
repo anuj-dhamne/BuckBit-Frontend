@@ -28,8 +28,8 @@ const Login = () => {
       toast.error("Both username and password are required.");
       return;
     }
-    console.log("Username : ",username);
-    console.log("password : ",password);
+    // console.log("Username : ",username);
+    // console.log("password : ",password);
     try {
       setLoading(true);
       const response = await axios.post(
@@ -42,7 +42,7 @@ const Login = () => {
           withCredentials:true
         },
       );
-      console.log("Response : ",response.data.data.user);
+      // console.log("Response : ",response.data.data.user);
       toast.success("Login successful!");
       login(response.data.data.user);
       navigate("/dashboard");
